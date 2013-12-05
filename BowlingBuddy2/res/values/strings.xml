@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BowlingBuddy2</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="GameButton">Add Game</string>
+    <string name="StatsButton">Statistics</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="Next">Next Ball</string>
+    <string name="Number1">1</string>
+    <string name="Number2">2</string>
+    <string name="Number3">3</string>
+    <string name="Number4">4</string>
+    <string name="Number5">5</string>
+    <string name="Number6">6</string>
+    <string name="Number7">7</string>
+    <string name="Number8">8</string>
+    <string name="Number9">9</string>
+    <string name="Number10">10</string>
+    <string name="hitY">Yes</string>
+    <string name="hitN">No</string>
+    <string name="menu_delete">Delete Entry</string>
+    <string name="nope">No Games</string>
+    <string name="pocketF">Flush</string>
+    <string name="pocketL">Light</string>
+    <string name="pocketH">Heavy</string>
+    <string name="pocketN">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="View">View Games</string>
+    <string name="title_activity_view_games">ViewGames</string>
+    <string name="filldate">__________________________________</string>
+    <string name="title_activity_stats_view">StatsView</string>
+
+</resources>
