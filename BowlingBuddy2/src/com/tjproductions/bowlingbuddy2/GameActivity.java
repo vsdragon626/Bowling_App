@@ -12,7 +12,6 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -72,7 +71,7 @@ public class GameActivity extends Activity {
 	private int ball = 1;
 	private int score = 0;
 	private int frame = 1;
-	private boolean strike = false;
+	private boolean[] frame10 = new boolean[]{false,false,false,false};
 	private Uri itemUri;
 
 
@@ -164,6 +163,16 @@ public class GameActivity extends Activity {
 				addFrame();
 				if(frame == 10 && ball == 4){
 					next.setText("Done");
+					pin1.setChecked(true);
+					pin2.setChecked(true);
+					pin3.setChecked(true);
+					pin4.setChecked(true);
+					pin5.setChecked(true);
+					pin6.setChecked(true);
+					pin7.setChecked(true);
+					pin8.setChecked(true);
+					pin9.setChecked(true);
+					pin10.setChecked(true);
 					next.setClickable(false);
 					pin1.setClickable(false);
 					pin2.setClickable(false);
@@ -199,7 +208,6 @@ public class GameActivity extends Activity {
 
 	private void addFrame(){
 		int num = 0;
-		boolean clean = false;
 		boolean p1 = true,p2 = true,p3 = true,p4 = true,p5 = true,p6 = true,p7 = true,p8 = true,p9 = true,p10 = true;
 		if(!pin1.isChecked()){
 			num++;
@@ -242,40 +250,54 @@ public class GameActivity extends Activity {
 			p10 = false;
 		}
 
-
-		if(num==0){
-			gameString = gameString+"-";
-			clean = false;
+		if(frame==10){
+			if(num==0){
+				gameString = gameString+"-";
+			}
+			else if(num != 10){
+				if(ball == 2 && !frame10[ball]){
+					gameString = gameString+(num-score);
+				}
+				else{
+					gameString = gameString+num;
+					score = num;
+				}
+			}
+			else if(num == 10 && (frame10[ball] || (ball == 1 || ball == 3))){
+				gameString = gameString+"X";
+				frame10[ball] = true;
+			}
+			else if(num == 10 && ball == 2){
+				gameString = gameString+"/";
+				frame10[ball] = true;
+			}
 		}
-		else if((num==10 && ball == 1) || (frame==10 && strike)){
-			if(frame != 10){
+		else{
+			if(num==0){
+				gameString = gameString+"-";
+			}
+			else if(num==10 && ball == 1){
 				gameString = gameString+"X ";
 				ball = 2;
 			}
-			else{
-				gameString = gameString+"X";
-			}
-			clean = true;
-		}
-		else if(num==10 || (!strike && frame == 10)){
-			gameString = gameString+"/ ";
-			clean = true;
-		}
-		else{
-			if((num-score) == 0){
-				gameString = gameString+"-";
+			else if(num==10){
+				gameString = gameString+"/ ";
 			}
 			else{
-				gameString = gameString+(num-score);
+				if((num-score) == 0){
+					gameString = gameString+"-";
+				}
+				else{
+					gameString = gameString+(num-score);
+				}
 			}
-			clean = false;
 		}
 
 
 		if(frame == 10){
 			if(ball == 1){
 				ball = 2;
-				if(clean){
+				if(frame10[ball-1]){
 					pin1.setChecked(true);
 					pin2.setChecked(true);
 					pin3.setChecked(true);
@@ -286,7 +308,6 @@ public class GameActivity extends Activity {
 					pin8.setChecked(true);
 					pin9.setChecked(true);
 					pin10.setChecked(true);
-					strike = true;
 				}
 				else{
 					pin1.setChecked(p1);
@@ -299,11 +320,10 @@ public class GameActivity extends Activity {
 					pin8.setChecked(p8);
 					pin9.setChecked(p9);
 					pin10.setChecked(p10);
-					strike = false;
 				}
 			}
 			else if(ball == 2){
-				if(clean){
+				if(frame10[ball]){
 					ball = 3;
 					score = 0;
 					pin1.setChecked(true);
@@ -316,7 +336,6 @@ public class GameActivity extends Activity {
 					pin8.setChecked(true);
 					pin9.setChecked(true);
 					pin10.setChecked(true);
-					strike = true;
 				}
 				else{
 					ball = 4;
